@@ -1,0 +1,336 @@
+/* Enhanced Forest Theme Variables */
+:root {
+    --forest-dark: #0a3d0a;
+    --forest-medium: #1e5b1e;
+    --forest-light: #2e8b2e;
+    --wood-dark: #4e2c0f;
+    --wood-light: #7b4b2a;
+    --leaf-green: #4caf50;
+    --ground: #5d4037;
+    --sky: #b3e0ff;
+    --water: #4fc3f7;
+    --correct: rgba(76, 175, 80, 0.7);
+    --wrong: rgba(244, 67, 54, 0.7);
+    --gold: #ffd700;
+  }
+  
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to bottom, var(--sky), var(--forest-light));
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .game-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .game-header {
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+  }
+  
+  .game-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  }
+  
+  .game-stats {
+    display: flex;
+    justify-content: space-around;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    border-radius: 15px;
+  }
+  
+  .chances,
+  .gold {
+    padding: 5px 15px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  
+  .gold {
+    color: var(--gold);
+  }
+  
+  .game-board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+  }
+  
+  .start-area,
+  .end-area {
+    width: 100%;
+    height: 80px;
+    background-color: var(--ground);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 10px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border: 2px solid var(--wood-dark);
+  }
+  
+  .start-label,
+  .end-label {
+    position: absolute;
+    left: 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  }
+  
+  .bridge {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: linear-gradient(to right, var(--water), #2196f3);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .bridge::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 25%),
+      radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 25%);
+    animation: waterShimmer 10s infinite linear;
+  }
+  
+  @keyframes waterShimmer {
+    0% {
+      transform: translateX(-50%) translateY(-50%) rotate(0deg);
+    }
+    100% {
+      transform: translateX(-50%) translateY(-50%) rotate(360deg);
+    }
+  }
+  
+  .bridge-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  
+  .bridge-div {
+    width: 100px;
+    height: 40px;
+    background-color: var(--wood-light);
+    border: 2px solid var(--wood-dark);
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .bridge-div::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      45deg,
+      transparent 40%,
+      rgba(255, 255, 255, 0.1) 45%,
+      rgba(255, 255, 255, 0.1) 55%,
+      transparent 60%
+    );
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .bridge-div:hover::before {
+    transform: translateX(100%);
+  }
+  
+  .bridge-div:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .bridge-div.correct {
+    background-color: var(--correct);
+    box-shadow: 0 0 10px var(--leaf-green);
+  }
+  
+  .bridge-div.wrong {
+    background-color: var(--wrong);
+    animation: shake 0.5s;
+  }
+  
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    75% {
+      transform: translateX(5px);
+    }
+  }
+  
+  .player-piece {
+    width: 20px;
+    height: 30px;
+    position: relative;
+    animation: bounce 0.5s infinite alternate;
+  }
+  
+  @keyframes bounce {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-5px);
+    }
+  }
+  
+  .player-head {
+    width: 20px;
+    height: 20px;
+    background-color: #ffcc80;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+  }
+  
+  .player-body {
+    width: 20px;
+    height: 15px;
+    background-color: #f44336;
+    position: absolute;
+    bottom: 0;
+    border-radius: 0 0 5px 5px;
+  }
+  
+  .game-result {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    margin: auto;
+    animation: fadeIn 0.5s;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .game-result h2 {
+    color: var(--forest-dark);
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+  
+  .game-result button {
+    background-color: var(--forest-medium);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .game-result button:hover {
+    background-color: var(--forest-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Add some forest decorations */
+  .game-container::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(
+        circle at 10% 20%,
+        transparent 0%,
+        transparent 5%,
+        rgba(76, 175, 80, 0.1) 5.1%,
+        rgba(76, 175, 80, 0.1) 20%
+      ),
+      radial-gradient(
+        circle at 90% 80%,
+        transparent 0%,
+        transparent 5%,
+        rgba(76, 175, 80, 0.1) 5.1%,
+        rgba(76, 175, 80, 0.1) 20%
+      ),
+      radial-gradient(
+        circle at 50% 50%,
+        transparent 0%,
+        transparent 5%,
+        rgba(76, 175, 80, 0.05) 5.1%,
+        rgba(76, 175, 80, 0.05) 30%
+      );
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 600px) {
+    .game-container {
+      padding: 10px;
+    }
+  
+    .game-header h1 {
+      font-size: 2rem;
+    }
+  
+    .bridge-div {
+      width: 80px;
+      height: 35px;
+    }
+  }
+  
+  
